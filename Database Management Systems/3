@@ -1,0 +1,46 @@
+mysql> create table Customer(ID int(10) primary key, Name varchar(20), Age int(5), Address varchar(20), Salary int(10));
+
+mysql> insert into Customer values(424,"A",24, "Aundh,Pune",25612),(234,"B",26,"Bavdhan,Pune",26424);
+
+mysql> select * from Customer;
+
+mysql> create table Orders(O_ID int(5), O_Date date,cust_id int(5), amount int(10));
+
+mysql> insert into Orders values(110,"2023-02-10",215,750);
+
+mysql> insert into Orders values(120,"2023-04-15",324,1500);
+
+mysql> select Customer.ID, Customer.Name,Orders.amount, Orders.O_Date from Customer inner join Orders on Customer.ID = Orders.cust_id;
+
+mysql> select Customer.ID, Customer.Name, Orders.amount, Orders.O_Date from Customer left join Orders on Customer.ID = Orders.cust_id;
+
+mysql> select Customer.ID, Customer.Name, Orders.amount, Orders.O_Date from Customer right join Orders on Customer.ID = Orders.cust_id;
+
+mysql> select Customer.ID, Customer.Name, Orders.amount, Orders.O_Date from Customer left join Orders on Customer.ID = Orders.cust_id union all select Customer.ID, Customer.Name,Orders.amount, Orders.O_Date from Customer right join Orders on Customer.ID = Orders.cust_id;
+
+mysql> select Customer.ID, Customer.Name, Orders.amount, Orders.O_Date from Customer left join Orders on Customer.ID = Orders.cust_id union select Customer.ID, Customer.Name,Orders.amount, Orders.O_Date from Customer right join Orders on Customer.ID = Orders.cust_id;
+
+mysql>  update Customer set Address = "Kothrud,Pune" where ID=124;
+
+mysql> select s1.Address, s1.Name from Customer AS s1, Customer s2 where s1.Address = s2.Address;
+
+mysql> select t1.Name,t2.Name from Customer t1, Customer t2 where t1.Address = t2.Address;
+
+mysql> select Customer.ID, Customer.Name,Orders.amount, Orders.O_Date from Customer cross join Orders;
+
+mysql> select * from Customer where Salary in (select Salary from Customer where Salary > 20000);
+
+mysql>  create table cust_bkp(ID int(5), Name varchar(20), Age int(5),Salary int(10)) as (select ID,Name,Age,Salary from Customer);
+
+mysql> select * from cust_bkp;
+
+mysql> update Customer set Salary = Salary+0.1*Salary where Age in (select Age from cust_bkp where Age >=24);
+
+mysql> select * from Customer;
+
+mysql> delete from Customer where Age in (select Age from cust_bkp where Age>26);
+
+mysql> select * from Customer;
+
+
+
