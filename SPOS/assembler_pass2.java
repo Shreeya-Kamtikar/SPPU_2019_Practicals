@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class pass2 {
+public class assembler_pass2 {
 
     public static void main(String args[]) {
         String input = null;
