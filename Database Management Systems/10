@@ -1,0 +1,45 @@
+>db.createCollection("productss") 
+
+>db.Productss.insert({name:"Mobile",company:"Samsung",cost:8500});
+>db.Productss.insert({name:"Laptop",company:"HP",cost:45000});
+>db.Productss.insert({name:"Washing Machine",company:"LG",cost:13000}) 
+ 
+>db.Productss.find().pretty(); 
+
+>db.Productss.aggregate({$group:{_id:"$company","maxPrice":{$max:"$cost"},"minPrice":{$min:"$cost"}}}) 
+
+>db.Productss.aggregate([{$sort:{company:1}}]).pretty() 
+
+> db.Productss.count(); 
+
+>db.Productss.distinct("company"); 
+
+>db.Productss.find().limit(1).pretty() 
+
+>db.Productss.find().skip(2).pretty(); 
+
+>for (var i = 1; i <= 10; i++) { 
+... db.staff.insert({ 
+... Staff_id: i, 
+... staff_name: "StaffName" + i, 
+... age: Math.floor(Math.random() * 30) + 20 // Generate a random age between  20 and 49 
+... }); 
+... } 
+
+>db.staff.find().pretty(); 
+
+> db.staff.find({Staff_id:2}).pretty(); 
+
+>db.staff.find({staff_name:"StaffName10",age:22}).pretty(); 
+
+>db.staff.ensureIndex({staff_name:1}); 
+
+>db.staff.find({staff_name:"StaffName10",age:22}).pretty(); 
+
+>db.staff.ensureIndex({age:1,staff_name:1}); 
+
+>db.staff.getIndexes() 
+
+> db.staff.dropIndex({staff_name:1,age:1}); 
+
+>db.staff.dropIndex({staff_name:1}); 
