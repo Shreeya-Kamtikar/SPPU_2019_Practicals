@@ -1,0 +1,28 @@
+> db.createCollection("Staff");
+
+> db.Staff.insert({"Name":"A","Age":22,"Address":"Pune"});
+
+> db.Staff.insert({"Name":"B","Age":23,"Address":"Mumbai"});
+
+> db.Staff.insert({"Name":"C","Age":24,"Address":"New Delhi"});
+
+> db.Staff.insert({"Name":"D","Age":25,"Address":"Chennai"});
+
+> db.Staff.insert({"Name":"E","Age":26,"Address":"Bangalore"});
+
+> db.Staff.insert({"Name":"F","Age":28,"Address":"Hyderabad"});
+
+> db.Staff.insert({"Name":"B","Age":25,"Address":"Kolkata"});
+
+> db.Staff.insert({"Name":"F","Age":30,"Address":"Ahmedabad"});
+
+> db.Staff.find();
+
+> db.Staff.find().pretty();
+
+> var mapFunction = function(){emit(this.Name, this.Age)};
+> var reduceFunction = function(keyName, valueAge){return Array.sum(valueAge)}
+> db.Staff.mapReduce(mapFunction,reduceFunction,{out:"Staff1"});
+
+> db.Staff1.find().pretty();
+
