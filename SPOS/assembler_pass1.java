@@ -3,7 +3,7 @@ package module;
 import java.util.*;
 import java.io.*;
 
-public class m4 {
+public class assembler_pass1 {
     static int address = 0;
     static int sadd[] = new int[10];
     static int ladd[] = new int[10];
