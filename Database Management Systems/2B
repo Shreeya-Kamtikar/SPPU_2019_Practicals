@@ -1,0 +1,41 @@
+mysql> create table Student(roll_no int(10) primary key, name varchar(20), division varchar(10), branch varchar(20), city varchar(20), marks int(10));
+
+
+mysql> desc Student;
++----------+-------------+------+-----+---------+-------+
+| Field	| Type    	| Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| roll_no  | int(10) 	| NO   | PRI | NULL	|   	|
+| name 	| varchar(20) | YES  | 	| NULL	|   	|
+| division | varchar(10) | YES  | 	| NULL	|   	|
+| branch   | varchar(20) | YES  | 	| NULL	|   	|
+| city 	| varchar(20) | YES  | 	| NULL	|   	|
+| marks	| int(10) 	| YES  | 	| NULL	|   	|
++----------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> insert into Student(roll_no,name,division,branch,city,marks) values (1,"X","A","Comp","Pune",90),(2,"Y","B","Comp","Pune",89),(3,"Z","C","IT","Mumbai",88);
+
+mysql> select * from Student;
+
+mysql> select name,city from Student;
+
+mysql> select distinct name from Student;
+
+mysql> select roll_no,name,marks from Student where marks > 75;
+
+mysql> select name from Student where name like 'S%';
+
+mysql> select * from Student where marks between 50 and 60;
+
+mysql> select * from Student where city="Pune" and branch="Comp";
+
+mysql> update Student set branch="IT" where roll_no=9;
+
+mysql> delete from Student where branch="ENTC";
+
+mysql> select * from Student;
+
+mysql> exit;
+Bye
+
