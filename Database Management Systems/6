@@ -1,0 +1,209 @@
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+_________________________________________________________________________
+
+Executing procedure by loop for student table:
+
+SQL> create table stud_marks(rollno number(3), name varchar2(20), marks number(5));
+
+SQL> insert into stud_marks values (101, 'A',1200);
+
+SQL> insert into stud_marks values (102, 'B',1350);
+
+SQL> insert into stud_marks values (103, 'C',960);
+
+SQL> insert into stud_marks values (104, 'D',905);
+
+SQL> insert into stud_marks values (105, 'E',888);
+
+SQL> insert into stud_marks values (106, 'F',840);
+
+SQL> create table result(rollno number(3),name varchar2(20),class varchar2(30));
+
+Table created.
+
+SQL> set serveroutput on;
+
+SQL> create or replace procedure class as
+  2  begin
+  3  for i in (select * from stud_marks)
+  4  loop
+  5  dbms_output.put_line('Student name: ' || i.name || ' Student marks: ' || i.marks);
+  6  if i.marks <= 1500 and i.marks >= 990 then
+  7  insert into result values (i.rollno, i.name, 'Distinction');
+  8  elsif i.marks <= 989 and i.marks >= 900 then
+  9  insert into result values (i.rollno, i.name, 'First Class');
+ 10  elsif i.marks <= 899 and i.marks >= 800 then
+ 11  insert into result values (i.rollno, i.name, 'Second Class');
+ 12  end if;
+ 13  end loop;
+ 14  commit;
+ 15  end;
+ 16  /
+
+Procedure created.
+
+6 rows selected.
+
+SQL> execute class;
+Student name: A Student marks: 1200
+Student name: B Student marks: 1350
+Student name: C Student marks: 960
+Student name: D Student marks: 905
+Student name: E Student marks: 888
+Student name: F Student marks: 840
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from result;
+
+ROLLNO	 NAME		    CLASS
+--------------------------------
+   101		A	    Distinction
+   102		B   	Distinction
+   103 		C   	First Class
+   104 		D   	First Class
+   105 		E   	Second Class
+   106 		F   	Second Class
+
+_________________________________________________________________________
+
+Passing parameters to procedure:
+
+SQL> create table stud_marks(rollno number(3), name varchar2(20), marks number(5));
+
+SQL> insert into stud_marks values (101, 'A',1200);
+
+SQL> insert into stud_marks values (102, 'B',1350);
+
+SQL> insert into stud_marks values (103, 'C',960);
+
+SQL> insert into stud_marks values (104, 'D',905);
+
+SQL> insert into stud_marks values (105, 'E',888);
+
+SQL> insert into stud_marks values (106, 'F',840);
+
+SQL> create table result(rollno number(3),name varchar2(20),class varchar2(30));
+
+Table created.
+SQL> create table rest(rollno number(3),name varchar2(20),class varchar2(30));
+
+Table created.
+
+SQL> create or replace procedure proc(rno number, names varchar2, tot_marks number) is grade varchar2(30);
+begin
+if (tot_marks <= 1500 and tot_marks >= 990) then
+grade := 'Distinction';
+elsif (tot_marks <= 989 and tot_marks >= 900) then
+grade := 'First Class';
+elsif (tot_marks <= 899 and tot_marks >= 800) then
+grade := 'Second Class';
+end if;
+insert into rest values (rno, names, grade);
+end;  
+/
+
+Procedure created.
+
+SQL> exec proc(101,'A',1200);
+
+PL/SQL procedure successfully completed.
+
+SQL> exec proc(102,'B',1350);
+
+PL/SQL procedure successfully completed.
+
+SQL> exec proc (103, 'C',960);
+
+PL/SQL procedure successfully completed.
+
+SQL> exec proc(104, 'D',905);
+
+PL/SQL procedure successfully completed.
+
+SQL> exec proc(105, 'E',888);
+
+PL/SQL procedure successfully completed.
+
+SQL> exec proc(106, 'F',840);
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from rest;
+
+ROLLNO	 NAME		    CLASS
+--------------------------------
+   101		A	    Distinction
+   102		B   	Distinction
+   103 		C   	First Class
+   104 		D   	First Class
+   105 		E   	Second Class
+   106 		F   	Second Class
+
+__________________________________________________________________________
+
+With cursor:
+
+SQL> create table stud_marks(rollno number(3), name varchar2(20), marks number(5));
+
+SQL> insert into stud_marks values (101, 'A',1200);
+
+SQL> insert into stud_marks values (102, 'B',1350);
+
+SQL> insert into stud_marks values (103, 'C',960);
+
+SQL> insert into stud_marks values (104, 'D',905);
+
+SQL> insert into stud_marks values (105, 'E',888);
+
+SQL> insert into stud_marks values (106, 'F',840);
+
+SQL> create table rest11(rollno number(3),name varchar2(20),class varchar2(30));
+
+Table created.
+
+SQL> create or replace procedure proc_new(rno number, names varchar2, tot_marks number) is grade varchar2(30);
+begin
+if (tot_marks <= 1500 and tot_marks >= 990) then
+grade := 'Distinction';
+elsif (tot_marks <= 989 and tot_marks >= 900) then
+grade := 'First Class';
+elsif (tot_marks <= 899 and tot_marks >= 800) then 
+grade := 'Second Class';
+end if;
+insert into rest11 values (rno, names, grade);
+end;
+/
+
+Procedure created.
+
+SQL> declare
+r1 stud_marks.rollno%type;
+n1 stud_marks.name%type;
+m1 stud_marks.marks%type;
+cursor c1 is select rollno,name,marks from stud_marks;
+begin
+open c1;
+loop
+fetch c1 into r1, n1, m1;
+exit when c1%notfound;
+proc_new(r1, n1, m1);
+end loop;
+close c1;
+end; 
+/
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from rest11;
+
+ROLLNO	 NAME		    CLASS
+--------------------------------
+   101		A	    Distinction
+   102		B   	Distinction
+   103 		C   	First Class
+   104 		D   	First Class
+   105 		E   	Second Class
+   106 		F   	Second Class
+   
