@@ -1,0 +1,228 @@
+mysql> create database company;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| company            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use company;
+Database changed
+mysql> create table customer(cust_id int(10) primary key, cust_name varchar(20), product varchar(20),quantity int(5),total_price int(5));
+Query OK, 0 rows affected, 3 warnings (0.02 sec)
+
+mysql> desc customer;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| cust_id     | int         | NO   | PRI | NULL    |       |
+| cust_name   | varchar(20) | YES  |     | NULL    |       |
+| product     | varchar(20) | YES  |     | NULL    |       |
+| quantity    | int         | YES  |     | NULL    |       |
+| total_price | int         | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table customer modify cust_id int auto_increment;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from customer;
+Empty set (0.00 sec)
+
+mysql> insert into customer values (1,"Shreeya","pens",10,100);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from customer;
++---------+-----------+---------+----------+-------------+
+| cust_id | cust_name | product | quantity | total_price |
++---------+-----------+---------+----------+-------------+
+|       1 | Shreeya   | pens    |       10 |         100 |
++---------+-----------+---------+----------+-------------+
+1 row in set (0.00 sec)
+
+mysql> insert into customer values (2,"Rajasi","pencils",10,50);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customer values (cust_id,"Aditya","ruler",3,30);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer values (cust_id,"Ishan","erasers",5,10);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from customer;
++---------+-----------+---------+----------+-------------+
+| cust_id | cust_name | product | quantity | total_price |
++---------+-----------+---------+----------+-------------+
+|       1 | Shreeya   | pens    |       10 |         100 |
+|       2 | Rajasi    | pencils |       10 |          50 |
+|       3 | Aditya    | ruler   |        3 |          30 |
+|       4 | Ishan     | erasers |        5 |          10 |
++---------+-----------+---------+----------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into customer values (cust_id,"Nishita","sharpners",2,5);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from customer;
++---------+-----------+-----------+----------+-------------+
+| cust_id | cust_name | product   | quantity | total_price |
++---------+-----------+-----------+----------+-------------+
+|       1 | Shreeya   | pens      |       10 |         100 |
+|       2 | Rajasi    | pencils   |       10 |          50 |
+|       3 | Aditya    | ruler     |        3 |          30 |
+|       4 | Ishan     | erasers   |        5 |          10 |
+|       5 | Nishita   | sharpners |        2 |           5 |
++---------+-----------+-----------+----------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table customer add price_per_qty int(10);
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> desc customer;
++---------------+-------------+------+-----+---------+----------------+
+| Field         | Type        | Null | Key | Default | Extra          |
++---------------+-------------+------+-----+---------+----------------+
+| cust_id       | int         | NO   | PRI | NULL    | auto_increment |
+| cust_name     | varchar(20) | YES  |     | NULL    |                |
+| product       | varchar(20) | YES  |     | NULL    |                |
+| quantity      | int         | YES  |     | NULL    |                |
+| total_price   | int         | YES  |     | NULL    |                |
+| price_per_qty | int         | YES  |     | NULL    |                |
++---------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> update customer set price_per_qty=10 where cust_id=1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customer set price_per_qty=5 where cust_id=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customer set price_per_qty=10 where cust_id=3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update customer set price_per_qty=2 where cust_id=4;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from customer;
++---------+-----------+-----------+----------+-------------+---------------+
+| cust_id | cust_name | product   | quantity | total_price | price_per_qty |
++---------+-----------+-----------+----------+-------------+---------------+
+|       1 | Shreeya   | pens      |       10 |         100 |            10 |
+|       2 | Rajasi    | pencils   |       10 |          50 |             5 |
+|       3 | Aditya    | ruler     |        3 |          30 |            10 |
+|       4 | Ishan     | erasers   |        5 |          10 |             2 |
+|       5 | Nishita   | sharpners |        2 |           5 |          NULL |
++---------+-----------+-----------+----------+-------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> create view cust_view as select cust_id,cust_name from customer;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from cust_view;
++---------+-----------+
+| cust_id | cust_name |
++---------+-----------+
+|       1 | Shreeya   |
+|       2 | Rajasi    |
+|       3 | Aditya    |
+|       4 | Ishan     |
+|       5 | Nishita   |
++---------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> create or replace view cust_view as select cust_id,product,total_price from customer;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from cust_view;
++---------+-----------+-------------+
+| cust_id | product   | total_price |
++---------+-----------+-------------+
+|       1 | pens      |         100 |
+|       2 | pencils   |          50 |
+|       3 | ruler     |          30 |
+|       4 | erasers   |          10 |
+|       5 | sharpners |           5 |
++---------+-----------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> drop view cust_view;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> create index cust_index on customer(cust_name);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++---------------+-------------+------+-----+---------+----------------+
+| Field         | Type        | Null | Key | Default | Extra          |
++---------------+-------------+------+-----+---------+----------------+
+| cust_id       | int         | NO   | PRI | NULL    | auto_increment |
+| cust_name     | varchar(20) | YES  | MUL | NULL    |                |
+| product       | varchar(20) | YES  |     | NULL    |                |
+| quantity      | int         | YES  |     | NULL    |                |
+| total_price   | int         | YES  |     | NULL    |                |
+| price_per_qty | int         | YES  |     | NULL    |                |
++---------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from customer;
++---------+-----------+-----------+----------+-------------+---------------+
+| cust_id | cust_name | product   | quantity | total_price | price_per_qty |
++---------+-----------+-----------+----------+-------------+---------------+
+|       1 | Shreeya   | pens      |       10 |         100 |            10 |
+|       2 | Rajasi    | pencils   |       10 |          50 |             5 |
+|       3 | Aditya    | ruler     |        3 |          30 |            10 |
+|       4 | Ishan     | erasers   |        5 |          10 |             2 |
+|       5 | Nishita   | sharpners |        2 |           5 |          NULL |
++---------+-----------+-----------+----------+-------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> show indexes from customer;
++----------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table    | Non_unique | Key_name   | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++----------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| customer |          0 | PRIMARY    |            1 | cust_id     | A         |           5 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| customer |          1 | cust_index |            1 | cust_name   | A         |           5 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
++----------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> drop index cust_index on customer;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> rename table customer to cust;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from cust;
++---------+-----------+-----------+----------+-------------+---------------+
+| cust_id | cust_name | product   | quantity | total_price | price_per_qty |
++---------+-----------+-----------+----------+-------------+---------------+
+|       1 | Shreeya   | pens      |       10 |         100 |            10 |
+|       2 | Rajasi    | pencils   |       10 |          50 |             5 |
+|       3 | Aditya    | ruler     |        3 |          30 |            10 |
+|       4 | Ishan     | erasers   |        5 |          10 |             2 |
+|       5 | Nishita   | sharpners |        2 |           5 |          NULL |
++---------+-----------+-----------+----------+-------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> drop table cust;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from cust;
+ERROR 1146 (42S02): Table 'company.cust' doesn't exist
+
