@@ -1,0 +1,110 @@
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> create table borrower(rollno number(5), name varchar2(20), date_of_issue date, book_name varchar2(20), status varchar2(5));
+
+SQL> create table fine(rollno number(5), date1 date, amount number(10));
+
+SQL> insert into borrower values (1, 'Prajakta', '05-08-2023', 'DBMS', 'I');
+
+1 row created.
+
+SQL> insert into borrower values (2, 'Nirmal', '21-07-2023', 'TOC', 'I');
+
+1 row created.
+
+SQL> insert into borrower values (3, 'Neeraj', '01-07-2023', 'IoT', 'I');
+
+1 row created.
+
+SQL> declare
+rno number(3) := &rno;
+bname varchar2(30):='&bname';
+no_of_days number(5);
+issue_date date;
+famnt number(10):=0;
+begin
+select date_of_issue into issue_date from borrower where rollno = rno;
+select sysdate-to_date(issue_date) days into no_of_days from dual;
+if (no_of_days > 15 and no_of_days < 30) then
+famnt := no_of_days * 5;
+elsif no_of_days > 30 then
+famnt := 15 * 5 + (no_of_days - 30) * 50;
+end if;
+
+update borrower set status='R' where rollno = rno;
+if(famnt > 0) then
+insert into fine values (rno, sysdate, famnt);
+end if;
+exception
+when no_data_found then
+dbms_output.put_line('Record not found!');
+end;
+/
+
+Enter value for rno: 1
+old   2: rno number(3) := &rno;
+new   2: rno number(3) := 1;
+Enter value for bname: DBMS
+old   3: bname varchar2(30):='&bname';
+new   3: bname varchar2(30):='DBMS';
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from borrower;
+
+ROLLNO	NAME      DATE_OF_ISSUE	 BOOK_NAME		STATUS
+--------------------------------------------------------
+1		    Prajakta   	 05-08-23		   DBMS   	   	R
+2		    Nirmal   	   21-07-23 		 TOC   	   		I
+3 		  Neeraj   	   01-07-23 		 IoT   	   		I
+
+SQL> declare
+rno number(3) := &rno;
+bname varchar2(30):='&bname';
+no_of_days number(5);
+issue_date date;
+famnt number(10):=0;
+begin
+select date_of_issue into issue_date from borrower where rollno = rno;
+select sysdate-to_date(issue_date) days   2  into no_of_days from dual;
+if (no_of_days > 15 and no_of_days < 30) then
+famnt := no_of_days * 5;
+elsif no_of_days > 30 then
+famnt := 15 * 5 + (no_of_days - 30) * 50;
+end if;
+
+update borrower set status='R' where rollno = rno;
+if(famnt > 0) then
+  3  insert into fine values (rno, sysdate, famnt);
+end if;
+exception
+when no_data_found then
+dbms_output.put_line('Record not found!');
+end;  
+/
+
+Enter value for rno: 3
+old   2: rno number(3) := &rno;
+new   2: rno number(3) := 3;
+Enter value for bname: IoT
+old   3: bname varchar2(30):='&bname';
+new   3: bname varchar2(30):='IoT';
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from borrower;
+
+ROLLNO	NAME      DATE_OF_ISSUE	 BOOK_NAME		STATUS
+--------------------------------------------------------
+1		    Prajakta   	 05-08-23		   DBMS   	   	R
+2		    Nirmal   	   21-07-23 		 TOC   	   		I
+3 		  Neeraj   	   01-07-23 		 IoT   	   		R
+
+SQL> select * from fine;
+
+ROLLNO	DATE1		   AMOUNT
+------------------------------------------------------
+3 		  07-08-23   	475
+     
+
