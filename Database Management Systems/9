@@ -1,0 +1,43 @@
+> db.createCollection("Employee")
+
+> db.Employee.insert({name:"Joe", dept:"Operations", salary:5000, age:25})
+
+> db.Employee.insert({name:"Kevin", dept:"Production", salary: 6500, age: 26})
+
+> db.Employee.insert({name:"Jean", dept:"Accounting", salary: 7000, age: 29})
+
+> db.Employee.insert({name:"John", dept:"Operations", salary: 7500, age: 30})
+
+> db.Employee.insert({name:"Leslie", dept:"Production", salary: 8000, age: 28})
+
+> db.Employee.find().pretty()
+
+> db.Employee.insert([{name:"Allen", dept:"Accounting", salary: 9500, age:32}, {name: "Dennis", dept:"Production", salary:10000, age: 34}, {name:"Baker", dept:"Operations", salary: 110000, age:35}])
+
+> db.Employee.save({name:"Daniel", dept:"Production",salary:12000, age:38})
+
+> db.Employee.find().pretty()
+
+> db.Employee.find({name:"Joe", age:25})
+
+> db.Employee.find({name:"Joe", age:25}).pretty()
+
+> db.Employee.find({salary:{"$gt":5000}}).pretty()
+
+> db.Employee.update({name:"Joe"},{$set:{dept:"Operations"}})
+
+> db.Employee.find().pretty()
+
+> db.Employee.update({name:"Joe"},{$inc:{salary: +2000}})
+
+> db.Employee.update({name:"Joe"},{$addToSet:{email:"joe@example.com"}})
+
+> db.Employee.find().pretty()
+
+> db.Employee.remove({ dept: "Operations" })
+
+> db.Employee.find().sort({name:1})
+
+> db.Employee.find().limit(3)
+
+> db.Employee.find().skip(4)
