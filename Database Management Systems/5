@@ -1,0 +1,70 @@
+Connected to:
+Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production
+
+SQL> create table o_rollno(rollno number(5), name varchar2(20));
+
+SQL> insert into o_rollno values (1,’X’);
+
+SQL> insert into o_rollno values (2, 'Y');
+
+SQL> insert into o_rollno values (3, 'Z’);
+
+SQL> insert into o_rollno values (4, ‘W’);
+
+SQL> create table n_rollno(rollno number(5), name varchar2(20));
+
+SQL> insert into n_rollno values (1, 'X');
+
+SQL> insert into n_rollno values (5, ‘A’);
+
+SQL> insert into n_rollno values (6, ‘B’);
+
+SQL> insert into n_rollno values (7, ‘C’);
+
+SQL> select * from o_rollno;
+
+ROLLNO	NAME
+---------------
+1	       X
+2	       Y
+3	       Z
+4	       W
+
+SQL> select * from n_rollno;
+
+ROLLNO	NAME
+---------------
+1	       X
+2	       A
+3	       B
+4	       C
+
+
+SQL> declare
+temp_rollno int;
+temp_name varchar2(30);
+cursor c1 is select rollno, name from o_rollno where rollno not in (select rollno from n_rollno);
+begin
+open c1;
+loop
+fetch c1 into temp_rollno, temp_name;
+exit when c1%notfound;
+insert into n_rollno(rollno, name) values(temp_rollno, temp_name);
+end loop;
+close c1;
+end;
+  /
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from n_rollno;
+
+ROLLNO	              NAME
+-------------------------------
+1                      X
+5                      A
+6                      B
+7                      C
+4                      W
+3                      Z
+2                      Y
