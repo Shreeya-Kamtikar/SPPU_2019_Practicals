@@ -1,1 +1,1 @@
-# SPPU_2019_Practicals
+# SPPU_Comp_2019 Pattern _Practicals
