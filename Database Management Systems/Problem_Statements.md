@@ -8,8 +8,8 @@
     7. Create index ‘Cust_index’ on customer name
     8. Drop index ‘Cust_index’
     9. Use sequence/ auto-increment for incrementing customer ID
-   10. Use the name alias for table Customers (rename the table in query)
-   11. Drop the table Customers
+    10. Use the name alias for table Customers (rename the table in query)
+    11. Drop the table Customers
 
 ### Statement 2B: Design at least 10 SQL queries for suitable database application using SQL DML statements:Insert, Select, Update, Delete with operators, functions, and set operators.
     1. Create table Student with schema (roll_no, name, division, branch, city, marks)
