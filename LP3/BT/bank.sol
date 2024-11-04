@@ -1,71 +1,69 @@
 //SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
-construct Bank
+contract Bank
 {
-  struct User
-  {
-    int accno;
-    string name;
-    string phone;
-    uint balance;
-  }
+    struct User
+    {
+        int accno;
+        string name;
+        uint bal;
+    }
 
     User[] users;
 
-    function addUser(int accno, string memory name, string memory phone, uint balance) public
+    function addUser(int accno, string memory name, uint bal)
+    public 
     {
-      User memory newUser =  User(accno,name,phone,balance);
-      users.push(newUser);
+        User memory newUser = User(accno,name,bal);
+        users.push(newUser);
     }
 
-    function getUser(int accno) public view returns (string memory, string memory, uint)
+    function getUser(int accno) public view returns (string memory, uint)
     {
-      for(uint i=0; i<users.length; i++)
-      {
-        if(users[i].accno == accno)
+        for (uint i=0; i<users.length; i++)
         {
-          return (users[i].name, users[i].phone, users[i].balance)
+            if (users[i].accno == accno)
+            {
+                return (users[i].name, users[i].bal);
+            }
         }
-      }
-      return ("Not found", "Not found", 0)
-    }
-    
-    function getBalance(int accno) public view returns (uint)
-    {
-      for(uint i=0; i<users.length; i++)
-      {
-        if(users[i].accno == accno)
-        {
-          return (users[i].balance)
-        }
-      }
-      return ( 0)
+        return ("not found",0);
     }
 
-    function withdrawMoney(int accno, uint amount) public 
+    function getBal(int accno) public view returns (uint)
     {
-      for (uint i=0; i<users.length; i++)
-      {
-        if (users[i].accno == accno && users[i].balance >= amount)
+        for (uint i=0; i<users.length; i++)
         {
-          users[i].balance -= amount;
-          break;
+            if (users[i].accno == accno)
+            {
+                return (users[i].bal);
+            }
         }
-      }
+        return (0);
     }
 
-      function depositMonet(int accno, uint amount) public 
+    function deposit(int accno, uint amount) public 
     {
-      for (uint i=0; i<users.length; i++)
-      {
-        if (users[i].accno == accno)
+        for (uint i=0; i<users.length; i++)
         {
-          users[i].balance += amount;
-          break;
+            if (users[i].accno == accno)
+            {
+                users[i].bal += amount;
+                break;
+            }
         }
-      }
     }
-      
+
+    function withdraw(int accno, uint amount) public 
+    {
+        for (uint i=0; i<users.length; i++)
+        {
+            if (users[i].accno == accno && users[i].bal >= amount)
+            {
+                users[i].bal -= amount;
+                break;
+            }
+        }
+    }
 }
-      
