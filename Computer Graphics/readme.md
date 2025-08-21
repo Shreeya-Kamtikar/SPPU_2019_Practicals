@@ -1,4 +1,4 @@
-# This folder contains all programs for Artificial Intelligence course of SPPU 2019 Pattern TE SEM 2 Computer Engineering
+# This folder contains all programs for Computer Graphics course of SPPU 2019 Pattern SE SEM 1 Computer Engineering
 
 ## Problem Statements:
 ### Statement 1:
