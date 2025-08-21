@@ -15,3 +15,6 @@ C++ program to draw 2-D object and perform following basic transformations: a) S
 
 ### Statement 5:
 C++ program to generate fractal patterns by using Koch curves.
+
+### Statement 6:
+C++ program to implement animation.
