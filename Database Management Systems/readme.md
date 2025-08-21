@@ -1,4 +1,4 @@
-# This folder contains the practical assignments for the subject Database Management Systems (Semester 5) in the SPPU SE 2019 Computer Engineering course
+# This folder contains all programs for Database Management Systems course of SPPU 2019 Pattern TE SEM 1 Computer Engineering
 
 ### Statement 2A: Design and Develop SQL DDL statements which demonstrate the use of SQL objects such as Table, View, Index, Sequence, Synonym
     1. Create table Customers with schema (cust_id, cust_name, product, quantity, total_price)
