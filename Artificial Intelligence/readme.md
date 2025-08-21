@@ -1,4 +1,4 @@
-# This folder contains all programs for Artificial Intelligence course of TE SEM 2 Computer Engineering
+# This folder contains all programs for Artificial Intelligence course of SPPU 2019 Pattern TE SEM 2 Computer Engineering
 
 ## Problem Statements:
 ### Statement 1:
@@ -18,4 +18,3 @@ Develop an elementary catboat for any suitable customer interaction application.
 
 ### Statement 6: 
 Implement Expert System: for Hospitals and medical facilities
-
