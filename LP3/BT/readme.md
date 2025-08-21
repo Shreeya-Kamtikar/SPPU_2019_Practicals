@@ -13,9 +13,3 @@ Write a program in solidity to create Student data. Use the following constructs
 ● Arrays
 ● Fallback
 Deploy this as a smart contract on Ethereum and Observe the transaction fee and Gas values.
-
-### Statement 3:
-Mini Project: Create a dApp (decentralized app) for
-● e-voting system.
-● Hospital record management system
-● Decentralized system for any real time application.
